@@ -1,5 +1,6 @@
 package pe.com.gadolfolozano.sisenrollment.ui.splash;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -9,6 +10,7 @@ import pe.com.gadolfolozano.sisenrollment.BR;
 import pe.com.gadolfolozano.sisenrollment.R;
 import pe.com.gadolfolozano.sisenrollment.databinding.ActivitySplashBinding;
 import pe.com.gadolfolozano.sisenrollment.ui.base.BaseActivity;
+import pe.com.gadolfolozano.sisenrollment.ui.login.LoginActivity;
 
 /**
  * Created by adolfo on 5/09/18.
@@ -44,6 +46,9 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public void openLoginActivity() {
-
+        Intent intent = LoginActivity.newIntent(SplashActivity.this);
+        startActivity(intent);
+        finish();
     }
+
 }

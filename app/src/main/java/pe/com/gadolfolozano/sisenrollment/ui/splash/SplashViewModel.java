@@ -13,13 +13,6 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
     }
 
     public void startApp() {
-        /*String token = getDataManager().getUserToken();
-
-        if(token == null){
-            getNavigator().openLoginActivity();
-        }else {
-            getNavigator().openMainActivity();
-        }*/
         getNavigator().openLoginActivity();
     }
 }

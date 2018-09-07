@@ -23,6 +23,10 @@
         </activity>
 
         <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
     </application>
