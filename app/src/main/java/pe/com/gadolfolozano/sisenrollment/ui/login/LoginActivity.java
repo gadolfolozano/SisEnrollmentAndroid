@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -13,6 +18,7 @@ import pe.com.gadolfolozano.sisenrollment.BR;
 import pe.com.gadolfolozano.sisenrollment.R;
 import pe.com.gadolfolozano.sisenrollment.databinding.ActivityLoginBinding;
 import pe.com.gadolfolozano.sisenrollment.ui.base.BaseActivity;
+import pe.com.gadolfolozano.sisenrollment.util.StringUtil;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
@@ -20,6 +26,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     LoginViewModel mLoginViewModel;
 
     private ActivityLoginBinding mBinding;
+
+    private CpfTextWatcher mCpfTextWatcher;
+    private PasswordWatcher mPasswordWatcher;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -48,28 +57,84 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         mBinding = getViewDataBinding();
 
-        mBinding.tvUsername.addTextChangedListener(new TextWatcher() {
+        mCpfTextWatcher = new CpfTextWatcher();
+        mBinding.tvUsername.addTextChangedListener(mCpfTextWatcher);
+
+        mPasswordWatcher = new PasswordWatcher();
+        mBinding.tvPassword.addTextChangedListener(mPasswordWatcher);
+        mBinding.tvPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 4) {
-                    mBinding.buttonLogin.setEnabled(true);
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE && validateInputs()) {
+                    mBinding.buttonLogin.performClick();
                 }
+                return false;
+            }
+        });
+
+        mBinding.buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButtonLoginClicked();
             }
         });
     }
 
+    private void onButtonLoginClicked(){
+        openMainActivity();
+    }
+
+    class CpfTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            mBinding.tvUsername.removeTextChangedListener(mCpfTextWatcher);
+            mBinding.tvUsername.setText("");
+            mBinding.tvUsername.append(StringUtil.formatString("###.###.###-##", editable.toString()));
+            mBinding.tvUsername.addTextChangedListener(mCpfTextWatcher);
+            checkEnableButton();
+        }
+    }
+
+    class PasswordWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            checkEnableButton();
+        }
+    }
+
+    private void checkEnableButton() {
+        mBinding.buttonLogin.setEnabled(validateInputs());
+    }
+
+    private boolean validateInputs() {
+        return mBinding.tvUsername.getText().length() == 14 &&
+                mBinding.tvPassword.getText().length() > 6;
+    }
+
     @Override
     public void openMainActivity() {
-
+        Toast.makeText(this, "will call a service and open Main Activity", Toast.LENGTH_LONG).show();
     }
 }
