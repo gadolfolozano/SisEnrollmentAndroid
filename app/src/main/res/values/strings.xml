@@ -6,4 +6,8 @@
     <string name="text_hint_password">Senha</string>
 
     <string name="text_button_login">Entrar</string>
+
+    <string name="text_login_error_title">Falha ao entrar</string>
+    <string name="text_login_error_message">Não foi possivel fazer login, por favor, verifique os dados digitados.</string>
+    <string name="text_login_error_button">OK</string>
 </resources>

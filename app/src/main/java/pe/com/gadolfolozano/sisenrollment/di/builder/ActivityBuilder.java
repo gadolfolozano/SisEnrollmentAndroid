@@ -4,6 +4,8 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import pe.com.gadolfolozano.sisenrollment.ui.login.LoginActivity;
 import pe.com.gadolfolozano.sisenrollment.ui.login.LoginActivityModule;
+import pe.com.gadolfolozano.sisenrollment.ui.main.MainActivity;
+import pe.com.gadolfolozano.sisenrollment.ui.main.MainActivityModule;
 import pe.com.gadolfolozano.sisenrollment.ui.splash.SplashActivity;
 import pe.com.gadolfolozano.sisenrollment.ui.splash.SplashActivityModule;
 
@@ -19,5 +21,8 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = LoginActivityModule.class)
     abstract LoginActivity bindLoginActivity();
+
+    @ContributesAndroidInjector(modules = MainActivityModule.class)
+    abstract MainActivity bindMainActivity();
 
 }

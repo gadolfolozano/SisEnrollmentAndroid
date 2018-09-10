@@ -1,5 +1,6 @@
 package pe.com.gadolfolozano.sisenrollment.ui.login;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +12,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import pe.com.gadolfolozano.sisenrollment.BR;
 import pe.com.gadolfolozano.sisenrollment.R;
 import pe.com.gadolfolozano.sisenrollment.databinding.ActivityLoginBinding;
+import pe.com.gadolfolozano.sisenrollment.model.BaseModel;
 import pe.com.gadolfolozano.sisenrollment.model.LoginResponseModel;
 import pe.com.gadolfolozano.sisenrollment.ui.base.BaseActivity;
+import pe.com.gadolfolozano.sisenrollment.ui.main.MainActivity;
 import pe.com.gadolfolozano.sisenrollment.util.Constants;
 import pe.com.gadolfolozano.sisenrollment.util.StringUtil;
 
@@ -31,7 +33,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     private ActivityLoginBinding mBinding;
 
     private CpfTextWatcher mCpfTextWatcher;
-    private PasswordWatcher mPasswordWatcher;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -63,7 +64,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         mCpfTextWatcher = new CpfTextWatcher();
         mBinding.tvUsername.addTextChangedListener(mCpfTextWatcher);
 
-        mPasswordWatcher = new PasswordWatcher();
+        PasswordWatcher mPasswordWatcher = new PasswordWatcher();
         mBinding.tvPassword.addTextChangedListener(mPasswordWatcher);
         mBinding.tvPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -87,7 +88,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         hideKeyboard();
 
         String cpf = StringUtil.cleanString(Constants.CPF_MASK, mBinding.tvUsername.getText().toString());
-        String password = StringUtil.SHA1(mBinding.tvPassword.getText().toString());
+        String password = StringUtil.sha1(mBinding.tvPassword.getText().toString());
 
         mLoginViewModel.login(cpf, password).observe(this, new Observer<LoginResponseModel>() {
             @Override
@@ -100,6 +101,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     showLoading();
                 } else {
                     hideLoading();
+
+                    if (BaseModel.STATUS_SUCCESS.equalsIgnoreCase(loginResponseModel.getStatus())) {
+                        openMainActivity();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
+                                .setTitle(R.string.text_login_error_title)
+                                .setMessage(R.string.text_login_error_message)
+                                .setPositiveButton(R.string.text_login_error_button, null);
+                        builder.create().show();
+                    }
                 }
             }
         });
@@ -109,12 +120,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            //Do nothing
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            //Do nothing
         }
 
         @Override
@@ -131,12 +142,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            //Do nothing
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            //Do nothing
         }
 
         @Override
@@ -156,6 +167,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void openMainActivity() {
-        Toast.makeText(this, "will call a service and open Main Activity", Toast.LENGTH_LONG).show();
+        startActivity(MainActivity.newIntent(this));
+        finish();
     }
 }
