@@ -1,5 +1,6 @@
 package pe.com.gadolfolozano.sisenrollment.ui.login;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import javax.inject.Inject;
 import pe.com.gadolfolozano.sisenrollment.BR;
 import pe.com.gadolfolozano.sisenrollment.R;
 import pe.com.gadolfolozano.sisenrollment.databinding.ActivityLoginBinding;
+import pe.com.gadolfolozano.sisenrollment.model.LoginResponseModel;
 import pe.com.gadolfolozano.sisenrollment.ui.base.BaseActivity;
+import pe.com.gadolfolozano.sisenrollment.util.Constants;
 import pe.com.gadolfolozano.sisenrollment.util.StringUtil;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
@@ -80,8 +83,26 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         });
     }
 
-    private void onButtonLoginClicked(){
-        openMainActivity();
+    private void onButtonLoginClicked() {
+        hideKeyboard();
+
+        String cpf = StringUtil.cleanString(Constants.CPF_MASK, mBinding.tvUsername.getText().toString());
+        String password = StringUtil.SHA1(mBinding.tvPassword.getText().toString());
+
+        mLoginViewModel.login(cpf, password).observe(this, new Observer<LoginResponseModel>() {
+            @Override
+            public void onChanged(@Nullable LoginResponseModel loginResponseModel) {
+                if (loginResponseModel == null) {
+                    return;
+                }
+
+                if (loginResponseModel.isLoading()) {
+                    showLoading();
+                } else {
+                    hideLoading();
+                }
+            }
+        });
     }
 
     class CpfTextWatcher implements TextWatcher {
@@ -100,7 +121,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         public void afterTextChanged(Editable editable) {
             mBinding.tvUsername.removeTextChangedListener(mCpfTextWatcher);
             mBinding.tvUsername.setText("");
-            mBinding.tvUsername.append(StringUtil.formatString("###.###.###-##", editable.toString()));
+            mBinding.tvUsername.append(StringUtil.formatString(Constants.CPF_MASK, editable.toString()));
             mBinding.tvUsername.addTextChangedListener(mCpfTextWatcher);
             checkEnableButton();
         }
@@ -130,7 +151,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     private boolean validateInputs() {
         return mBinding.tvUsername.getText().length() == 14 &&
-                mBinding.tvPassword.getText().length() > 6;
+                mBinding.tvPassword.getText().length() >= 6;
     }
 
     @Override
