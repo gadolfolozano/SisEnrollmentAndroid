@@ -10,4 +10,11 @@
     <string name="text_login_error_title">Falha ao entrar</string>
     <string name="text_login_error_message">Não foi possivel fazer login, por favor, verifique os dados digitados.</string>
     <string name="text_login_error_button">OK</string>
+
+    <string name="text_title_courses">Meus Cursos</string>
+    <string name="text_title_enrollment">Matrícula</string>
+    <string name="text_title_assesment">Minhas Availações</string>
+    <string name="text_title_my_info">Minhas Info</string>
+    <string name="text_title_logout">Sair</string>
+
 </resources>

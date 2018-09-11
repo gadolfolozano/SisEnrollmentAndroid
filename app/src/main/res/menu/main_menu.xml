@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/account"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="My Account" />
+        android:id="@+id/courses"
+        android:title="@string/text_title_courses" />
     <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Settings" />
+        android:id="@+id/enrollment"
+        android:title="@string/text_title_enrollment" />
     <item
-        android:id="@+id/mycart"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="My Cart" />
+        android:id="@+id/assesment"
+        android:title="@string/text_title_assesment" />
+    <item
+        android:id="@+id/my_info"
+        android:title="@string/text_title_my_info" />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/text_title_logout" />
 </menu>

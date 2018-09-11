@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 public class LoginResponse implements Serializable {
-    @SerializedName("cpf")
+    @SerializedName("token")
     private String token;
 
     @SerializedName("user")

@@ -1,6 +1,9 @@
 package pe.com.gadolfolozano.sisenrollment.ui.splash;
 
+import android.arch.lifecycle.LiveData;
+
 import pe.com.gadolfolozano.sisenrollment.data.DataManager;
+import pe.com.gadolfolozano.sisenrollment.model.LoginResponseModel;
 import pe.com.gadolfolozano.sisenrollment.ui.base.BaseViewModel;
 
 /**
@@ -12,7 +15,7 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
         super(dataManager);
     }
 
-    public void startApp() {
-        getNavigator().openLoginActivity();
+    public LiveData<LoginResponseModel> getSession() {
+        return getDataManager().getSession();
     }
 }

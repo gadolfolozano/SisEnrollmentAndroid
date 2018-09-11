@@ -100,20 +100,41 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 if (loginResponseModel.isLoading()) {
                     showLoading();
                 } else {
-                    hideLoading();
-
                     if (BaseModel.STATUS_SUCCESS.equalsIgnoreCase(loginResponseModel.getStatus())) {
-                        openMainActivity();
+                        saveSession(loginResponseModel);
                     } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
-                                .setTitle(R.string.text_login_error_title)
-                                .setMessage(R.string.text_login_error_message)
-                                .setPositiveButton(R.string.text_login_error_button, null);
-                        builder.create().show();
+                        hideLoading();
+                        showErrorMessage();
                     }
                 }
             }
         });
+    }
+
+    private void saveSession(LoginResponseModel loginResponseModel) {
+        mLoginViewModel.saveSession(loginResponseModel).observe(this, new Observer<BaseModel>() {
+            @Override
+            public void onChanged(@Nullable BaseModel baseModel) {
+                if (baseModel == null) {
+                    return;
+                }
+
+                hideLoading();
+                if (BaseModel.STATUS_SUCCESS.equalsIgnoreCase(baseModel.getStatus())) {
+                    openMainActivity();
+                } else {
+                    showErrorMessage();
+                }
+            }
+        });
+    }
+
+    private void showErrorMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
+                .setTitle(R.string.text_login_error_title)
+                .setMessage(R.string.text_login_error_message)
+                .setPositiveButton(R.string.text_login_error_button, null);
+        builder.create().show();
     }
 
     class CpfTextWatcher implements TextWatcher {

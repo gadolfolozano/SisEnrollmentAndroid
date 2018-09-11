@@ -14,6 +14,10 @@ import pe.com.gadolfolozano.sisenrollment.data.DataManager;
 import pe.com.gadolfolozano.sisenrollment.data.DataManagerImplements;
 import pe.com.gadolfolozano.sisenrollment.data.remote.ApiHelper;
 import pe.com.gadolfolozano.sisenrollment.data.remote.ApiHelperImplements;
+import pe.com.gadolfolozano.sisenrollment.data.remote.local.preferences.PreferenceHelper;
+import pe.com.gadolfolozano.sisenrollment.data.remote.local.preferences.PreferenceHelperImplements;
+import pe.com.gadolfolozano.sisenrollment.di.PreferenceInfo;
+import pe.com.gadolfolozano.sisenrollment.util.Constants;
 
 /**
  * Created by adolfo on 5/09/18.
@@ -21,6 +25,18 @@ import pe.com.gadolfolozano.sisenrollment.data.remote.ApiHelperImplements;
 
 @Module
 public class AppModule {
+
+    @Provides
+    @Singleton
+    PreferenceHelper providePreferencesHelper(PreferenceHelperImplements preferencesHelperImplements) {
+        return preferencesHelperImplements;
+    }
+
+    @Provides
+    @PreferenceInfo
+    String providePreferenceName() {
+        return Constants.PREF_NAME;
+    }
 
     @Provides
     @Singleton
