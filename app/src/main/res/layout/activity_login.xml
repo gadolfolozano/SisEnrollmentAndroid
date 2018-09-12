@@ -14,7 +14,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
 
 
         <EditText
@@ -27,6 +28,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="144dp"
             android:digits="0123456789.-"
+            android:drawableLeft="@drawable/ic_person_outline"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_person_outline"
             android:ems="10"
             android:hint="@string/text_hint_cpf"
             android:imeOptions="actionNext"
@@ -34,6 +38,8 @@
             android:maxLength="14"
             android:maxLines="1"
             android:nextFocusDown="@id/tvPassword"
+            android:textColor="@color/colorGrayBold"
+            android:textColorHint="@color/colorGrayLigth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +55,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:digits="0123456789"
+            android:drawableLeft="@drawable/ic_lock_outline"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_lock_outline"
             android:ems="10"
             android:hint="@string/text_hint_password"
             android:imeActionLabel="Entrar"
@@ -56,6 +65,8 @@
             android:inputType="numberPassword"
             android:maxLength="12"
             android:maxLines="1"
+            android:textColor="@color/colorGrayBold"
+            android:textColorHint="@color/colorGrayLigth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
