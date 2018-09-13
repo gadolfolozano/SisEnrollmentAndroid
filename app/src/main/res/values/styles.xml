@@ -12,6 +12,11 @@
         <item name="colorControlHighlight">@color/colorGrayLigth</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@drawable/selector_color_button</item>
+        <item name="android:textColor">@drawable/selector_color_button_text</item>
+    </style>
+
     <!-- Splash Screen theme. -->
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_background</item>

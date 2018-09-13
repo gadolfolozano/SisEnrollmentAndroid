@@ -9,9 +9,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "SERVER_URL", "\"http://18.218.55.188\""
+        }
         release {
+            buildConfigField "String", "SERVER_URL", "\"http://18.218.55.188\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

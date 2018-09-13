@@ -14,7 +14,7 @@
     <string name="text_title_courses">Meus Cursos</string>
     <string name="text_title_enrollment">Matrícula</string>
     <string name="text_title_assesment">Minhas Availações</string>
-    <string name="text_title_my_info">Minhas Info</string>
+    <string name="text_title_my_info">Minha Info</string>
     <string name="text_title_logout">Sair</string>
 
 </resources>

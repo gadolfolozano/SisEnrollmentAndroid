@@ -1,5 +1,7 @@
 package pe.com.gadolfolozano.sisenrollment.util;
 
+import pe.com.gadolfolozano.sisenrollment.BuildConfig;
+
 /**
  * Created by adolfo on 9/09/18.
  */
@@ -9,7 +11,7 @@ public class Constants {
         throw new IllegalStateException("Utility class");
     }
 
-    public static final String BASE_URL = "http://192.168.1.4:8080/EnrollmentManagement/rest/";
+    public static final String BASE_URL = String.format("%s%s", BuildConfig.SERVER_URL, "/EnrollmentManagement/rest/");
 
     public static final String PREF_NAME = "app_pref";
 
