@@ -32,7 +32,7 @@ public class ApiHelperImplements implements ApiHelper {
         final MutableLiveData<LoginResponseModel> data = new MutableLiveData<>();
 
         LoginRequest request = new LoginRequest();
-        request.setCpf(username);
+        request.setEmail(username);
         request.setPassword(password);
 
         data.setValue(mapper.toLoading());

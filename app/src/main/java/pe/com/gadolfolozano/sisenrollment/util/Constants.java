@@ -15,7 +15,5 @@ public class Constants {
 
     public static final String PREF_NAME = "app_pref";
 
-    public static final String CPF_MASK = "###.###.###-##";
-
     public static final String EMPTY_STRING = "";
 }

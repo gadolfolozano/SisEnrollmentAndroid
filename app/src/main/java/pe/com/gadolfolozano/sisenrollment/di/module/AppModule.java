@@ -12,10 +12,10 @@ import dagger.Module;
 import dagger.Provides;
 import pe.com.gadolfolozano.sisenrollment.data.DataManager;
 import pe.com.gadolfolozano.sisenrollment.data.DataManagerImplements;
+import pe.com.gadolfolozano.sisenrollment.data.preferences.PreferenceHelper;
+import pe.com.gadolfolozano.sisenrollment.data.preferences.PreferenceHelperImplements;
 import pe.com.gadolfolozano.sisenrollment.data.remote.ApiHelper;
 import pe.com.gadolfolozano.sisenrollment.data.remote.ApiHelperImplements;
-import pe.com.gadolfolozano.sisenrollment.data.remote.local.preferences.PreferenceHelper;
-import pe.com.gadolfolozano.sisenrollment.data.remote.local.preferences.PreferenceHelperImplements;
 import pe.com.gadolfolozano.sisenrollment.di.PreferenceInfo;
 import pe.com.gadolfolozano.sisenrollment.util.Constants;
 

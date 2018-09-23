@@ -21,8 +21,7 @@ import pe.com.gadolfolozano.sisenrollment.util.CommonUtils;
  * Created by adolfo on 5/09/18.
  */
 
-public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity
-        implements BaseFragment.Callback {
+public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
     private T mViewDataBinding;
@@ -48,16 +47,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
      * @return view model instance
      */
     public abstract V getViewModel();
-
-    @Override
-    public void onFragmentAttached() {
-
-    }
-
-    @Override
-    public void onFragmentDetached(String tag) {
-
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

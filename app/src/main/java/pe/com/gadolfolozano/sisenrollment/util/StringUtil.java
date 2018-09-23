@@ -5,6 +5,8 @@ import android.util.Log;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by adolfo on 7/09/18.
@@ -36,7 +38,7 @@ public class StringUtil {
         return output.toString();
     }
 
-    public static String cleanString(String mask, String value) {
+    private static String cleanString(String mask, String value) {
         String cleanedString = value;
         for (int i = 0; i < mask.length(); i++) {
             if (mask.charAt(i) != '#') {
@@ -54,7 +56,7 @@ public class StringUtil {
             md.update(textBytes, 0, textBytes.length);
             byte[] sha1hash = md.digest();
             return convertToHex(sha1hash);
-        } catch (NoSuchAlgorithmException|UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             Log.e(StringUtil.class.getName(), "error ", e);
         }
 
@@ -73,4 +75,11 @@ public class StringUtil {
         }
         return buf.toString();
     }
+
+    public static boolean validateEmail(String emailAddress) {
+        Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
+        Matcher regMatcher = regexPattern.matcher(emailAddress);
+        return regMatcher.matches();
+    }
+    
 }

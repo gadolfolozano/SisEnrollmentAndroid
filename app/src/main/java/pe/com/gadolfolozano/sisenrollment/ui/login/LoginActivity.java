@@ -22,7 +22,6 @@ import pe.com.gadolfolozano.sisenrollment.model.BaseModel;
 import pe.com.gadolfolozano.sisenrollment.model.LoginResponseModel;
 import pe.com.gadolfolozano.sisenrollment.ui.base.BaseActivity;
 import pe.com.gadolfolozano.sisenrollment.ui.main.MainActivity;
-import pe.com.gadolfolozano.sisenrollment.util.Constants;
 import pe.com.gadolfolozano.sisenrollment.util.StringUtil;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
@@ -32,7 +31,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     private ActivityLoginBinding mBinding;
 
-    private CpfTextWatcher mCpfTextWatcher;
+    private EmailTextWatcher mEmailTextWatcher;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -61,8 +60,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         mBinding = getViewDataBinding();
 
-        mCpfTextWatcher = new CpfTextWatcher();
-        mBinding.tvUsername.addTextChangedListener(mCpfTextWatcher);
+        mEmailTextWatcher = new EmailTextWatcher();
+        mBinding.tvUsername.addTextChangedListener(mEmailTextWatcher);
 
         PasswordWatcher mPasswordWatcher = new PasswordWatcher();
         mBinding.tvPassword.addTextChangedListener(mPasswordWatcher);
@@ -87,10 +86,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     private void onButtonLoginClicked() {
         hideKeyboard();
 
-        String cpf = StringUtil.cleanString(Constants.CPF_MASK, mBinding.tvUsername.getText().toString());
+        String email = mBinding.tvUsername.getText().toString();
         String password = StringUtil.sha1(mBinding.tvPassword.getText().toString());
 
-        mLoginViewModel.login(cpf, password).observe(this, new Observer<LoginResponseModel>() {
+        mLoginViewModel.login(email, password).observe(this, new Observer<LoginResponseModel>() {
             @Override
             public void onChanged(@Nullable LoginResponseModel loginResponseModel) {
                 if (loginResponseModel == null) {
@@ -137,7 +136,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         builder.create().show();
     }
 
-    class CpfTextWatcher implements TextWatcher {
+    class EmailTextWatcher implements TextWatcher {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -151,10 +150,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         @Override
         public void afterTextChanged(Editable editable) {
-            mBinding.tvUsername.removeTextChangedListener(mCpfTextWatcher);
-            mBinding.tvUsername.setText("");
-            mBinding.tvUsername.append(StringUtil.formatString(Constants.CPF_MASK, editable.toString()));
-            mBinding.tvUsername.addTextChangedListener(mCpfTextWatcher);
             checkEnableButton();
         }
     }
@@ -182,7 +177,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     private boolean validateInputs() {
-        return mBinding.tvUsername.getText().length() == 14 &&
+        return StringUtil.validateEmail(mBinding.tvUsername.getText().toString()) &&
                 mBinding.tvPassword.getText().length() >= 6;
     }
 

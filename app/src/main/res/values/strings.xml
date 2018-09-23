@@ -2,7 +2,7 @@
     <string name="app_name">SisEnrollment</string>
 
 
-    <string name="text_hint_cpf">Seu CPF</string>
+    <string name="text_hint_email">Email</string>
     <string name="text_hint_password">Senha</string>
 
     <string name="text_button_login">Entrar</string>

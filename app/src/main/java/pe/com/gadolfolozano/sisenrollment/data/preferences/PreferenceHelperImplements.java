@@ -1,4 +1,4 @@
-package pe.com.gadolfolozano.sisenrollment.data.remote.local.preferences;
+package pe.com.gadolfolozano.sisenrollment.data.preferences;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

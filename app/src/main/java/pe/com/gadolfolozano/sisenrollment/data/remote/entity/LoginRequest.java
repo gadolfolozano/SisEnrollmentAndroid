@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 
 public class LoginRequest implements Serializable{
-    @SerializedName("cpf")
-    private String cpf;
+    @SerializedName("email")
+    private String email;
 
     @SerializedName("password")
     private String password;
@@ -19,12 +19,12 @@ public class LoginRequest implements Serializable{
         //Required
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
