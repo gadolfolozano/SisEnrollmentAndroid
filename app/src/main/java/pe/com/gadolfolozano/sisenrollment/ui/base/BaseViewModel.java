@@ -7,6 +7,8 @@ import pe.com.gadolfolozano.sisenrollment.data.DataManager;
 
 /**
  * Created by adolfo on 5/09/18.
+ * Esta clase serve de base para todos os novos ViewModel do app
+ * define objetos que podem ser usados pelos ViewModel
  */
 
 public abstract class BaseViewModel<N> extends ViewModel {

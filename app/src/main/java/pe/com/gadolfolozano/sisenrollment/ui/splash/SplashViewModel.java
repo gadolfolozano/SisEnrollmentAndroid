@@ -8,6 +8,7 @@ import pe.com.gadolfolozano.sisenrollment.ui.base.BaseViewModel;
 
 /**
  * Created by adolfo on 5/09/18.
+ * Classe ViewModel que define a interacao entre o activity e o DataManager
  */
 
 public class SplashViewModel extends BaseViewModel<SplashNavigator> {
@@ -15,6 +16,9 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
         super(dataManager);
     }
 
+    /**
+     * recupera a sessao do usuario
+     */
     public LiveData<LoginResponseModel> getSession() {
         return getDataManager().getSession();
     }

@@ -18,6 +18,8 @@ import pe.com.gadolfolozano.sisenrollment.ui.main.MainActivity;
 
 /**
  * Created by adolfo on 5/09/18.
+ * Primeira tela do app, responsavel por redigir a tela de LoginActivity, ou
+ * ao MainActivity
  */
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {
@@ -45,6 +47,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         super.onCreate(savedInstanceState);
 
         mSplashViewModel.setNavigator(this);
+
+        // Se o usuario tem sessao o envia para o MainActivity, caso contrario para o LoginActivity
         mSplashViewModel.getSession().observe(this, new Observer<LoginResponseModel>() {
             @Override
             public void onChanged(@Nullable LoginResponseModel loginResponseModel) {
@@ -58,6 +62,9 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         });
     }
 
+    /**
+     * Abre o LoginActivity
+     */
     @Override
     public void openLoginActivity() {
         Intent intent = LoginActivity.newIntent(SplashActivity.this);
@@ -65,6 +72,9 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         finish();
     }
 
+    /**
+     * Abre o MainActivity
+     */
     @Override
     public void openMainActivity() {
         Intent intent = MainActivity.newIntent(SplashActivity.this);

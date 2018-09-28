@@ -1,12 +1,9 @@
 package pe.com.gadolfolozano.sisenrollment.ui.base;
 
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -19,6 +16,10 @@ import pe.com.gadolfolozano.sisenrollment.util.CommonUtils;
 
 /**
  * Created by adolfo on 5/09/18.
+ *
+ * Esta clase serve de base para todos os novos activities do app
+ * e tambem abstrae a implementacao da injecao de dependecias
+ * ao mesmo tempo que define a arquitetura mvvm
  */
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity {
@@ -28,8 +29,8 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     private V mViewModel;
 
     /**
-     * Override for set binding variable
-     *
+     * Sobrecargar para definir a variable de binding
+     * requerido para a implementacao da arquitetura mvvm
      * @return variable id
      */
     public abstract int getBindingVariable();
@@ -42,7 +43,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     int getLayoutId();
 
     /**
-     * Override for set view model
+     * Sobrecargar para definir o view model
      *
      * @return view model instance
      */
@@ -55,16 +56,17 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         performDataBinding();
     }
 
+    /**
+     * Requerido para a implementacao da arquitetura mvvm
+     */
     public T getViewDataBinding() {
         return mViewDataBinding;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    public boolean hasPermission(String permission) {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
-    }
 
+    /**
+     * Ocultar o teclado do celular
+     */
     public void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -75,28 +77,33 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         }
     }
 
+    /**
+     * Ocultar a vista de loading
+     */
     public void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }
     }
 
-    public void performDependencyInjection() {
-        AndroidInjection.inject(this);
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    public void requestPermissionsSafely(String[] permissions, int requestCode) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, requestCode);
-        }
-    }
-
+    /**
+     * Mostrar a vista de loading
+     */
     public void showLoading() {
         hideLoading();
         mProgressDialog = CommonUtils.showLoadingDialog(this);
     }
 
+    /**
+     * Requerido pela biblioteca de injecao de dependencias
+     */
+    public void performDependencyInjection() {
+        AndroidInjection.inject(this);
+    }
+
+    /**
+     * Requerido para a implementacao da arquitetura mvvm
+     */
     private void performDataBinding() {
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
