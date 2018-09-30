@@ -24,6 +24,9 @@ import pe.com.gadolfolozano.sisenrollment.ui.base.BaseActivity;
 import pe.com.gadolfolozano.sisenrollment.ui.main.MainActivity;
 import pe.com.gadolfolozano.sisenrollment.util.StringUtil;
 
+/**
+ * Tela de login do app
+ */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
     @Inject
@@ -75,6 +78,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             }
         });
 
+        // Define o comportamento do botao de Entrar
         mBinding.buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,12 +87,17 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         });
     }
 
+    /**
+     * Logica do botao de Entrar
+     */
     private void onButtonLoginClicked() {
         hideKeyboard();
 
+        //Obtem o email e password da tela
         String email = mBinding.tvUsername.getText().toString();
         String password = StringUtil.sha1(mBinding.tvPassword.getText().toString());
 
+        //Chama o servicio de login e aguarda resposta
         mLoginViewModel.login(email, password).observe(this, new Observer<LoginResponseModel>() {
             @Override
             public void onChanged(@Nullable LoginResponseModel loginResponseModel) {
@@ -96,9 +105,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                     return;
                 }
 
+                //Mostra loading ate obter resposta
                 if (loginResponseModel.isLoading()) {
                     showLoading();
                 } else {
+                    //Resposta do servicio
                     if (BaseModel.STATUS_SUCCESS.equalsIgnoreCase(loginResponseModel.getStatus())) {
                         saveSession(loginResponseModel);
                     } else {
@@ -110,6 +121,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         });
     }
 
+    /**
+     * Guarda a sessao do usuario no aparelho
+     */
     private void saveSession(LoginResponseModel loginResponseModel) {
         mLoginViewModel.saveSession(loginResponseModel).observe(this, new Observer<BaseModel>() {
             @Override
@@ -128,6 +142,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         });
     }
 
+    /**
+     * Mostra a mensagem de erro
+     */
     private void showErrorMessage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
                 .setTitle(R.string.text_login_error_title)
